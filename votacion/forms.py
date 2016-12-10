@@ -18,3 +18,7 @@ class registro_usuario(forms.Form):
     cedula = forms.CharField(max_length=30, label=u'Cédula', widget=forms.TextInput(attrs={'type':'text', 'class':'text', 'autofocus':'autofocus', 'required':'required', 'value':''}))
     email = forms.EmailField(widget=forms.TextInput(attrs={'type':'text', 'class':'text', 'autofocus':'autofocus', 'required':'required', 'value':''}))
     password1 = forms.CharField(max_length=10, label=u"Contraseña", widget=forms.PasswordInput(attrs={'type':'password', 'class':'password', 'autofocus':'autofocus', 'required':'required', 'value':''}))
+
+
+class login(forms.Form):
+    cedula = forms.CharField(max_length=30, label=u'Cédula', widget=forms.TextInput(attrs={'type':'text', 'class':'text', 'autofocus':'autofocus', 'required':'required', 'value':''}))

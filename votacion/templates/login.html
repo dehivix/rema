@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load staticfiles %}
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="theme-color" content="#2196F3">
+    <title>REMA</title>
+    <!-- CSS  -->
+    <link href="{% static 'materialize/min/plugin-min.css' %}" type="text/css" rel="stylesheet">
+    <link href="{% static 'materialize/min/custom-min.css' %}" type="text/css" rel="stylesheet" >
+</head>
+
+{% block content %}
+<body class="cyan scrollspy">
+    <div id="login-page" class="row section ">
+        <div class="col s12 m4 l4 card-panel">
+        <form action='.' method='POST' class='login-form' enctype="multipart/form-data">{% csrf_token %}
+            <div class="row">
+                <div class="inputV-field col s12 ">
+                    <p class="center login-form-text">INGRESO AL SISTEMA</p>
+                </div>
+            </div>
+            <div class="row margin">
+                <div class="input-field col s12">
+                <i class="mdi-social-person-outline prefix"></i>
+                    {{ form.cedula }}
+                <label class="center-align" for="cedula"></label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 m12 l12 login-text">
+                    <input id="remember-me" type="checkbox">
+                    <label for="remember-me">Recuerdame</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input type='submit' class="btn waves-effect waves-light col s12" ></input>
+                    {% if mensaje %}
+                    <p class="center login-form-text">{{ mensaje }}</p>
+                    {% endif %}
+                </div>
+            </div>
+        </form>
+        </div>
+    </div>
+</body>
+{% endblock %}
+</html>

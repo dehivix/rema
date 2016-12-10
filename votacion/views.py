@@ -24,15 +24,61 @@ from django.utils.http import base36_to_int
 import datetime
 from django.contrib.auth import authenticate
 from forms import registro_usuario
+from forms import login
 from django.shortcuts import get_object_or_404
 from models import Candidatos
 from models import Procesos
 from models import VotoPersona
 from general.models import Personas
+from django.db.models import Q
 
 # Create your views here.
 @csrf_protect
 def index(request):
+    if request.method == 'POST':
+        #import pdb;pdb.set_trace()
+        form = login(request.POST)
+        if form.is_valid():
+            cedula = form.cleaned_data['cedula']
+            persona = Personas.objects.filter(cedula=cedula)
+            if not persona.exists():
+                form = login
+                c = {}
+                c.update(csrf(request))
+                c.update({'mensaje':'USUARIO NO VALIDO', 'form': form})
+                return render_to_response('login.html', c)
+
+            persona = persona[0]
+            proceso_activo = Procesos.objects.get(estatus=1)
+            candidatos = Candidatos.objects.filter(proceso__pk=proceso_activo.pk, iglesia__pk=persona.membresia.pk)
+            #candidatos_finales = []
+            finales = []
+            votos = VotoPersona.objects.filter(persona=persona, proceso=proceso_activo, candidato__in=candidatos)
+
+            #finales = [ candidatos.exclude(Q(id=i.candidato.id) | Q(cargos=i.candidato.cargos) ) for i in votos ]
+
+            candidatos_finales = candidatos.exclude(id__in=(votos))
+            ya_voto = False
+            '''try:
+                candidatos_finales = finales.filter(cargos=finales[0].cargos)
+            except:
+                ya_voto = 'NO EXISTEN CANDIDATOS, O YA HA VOTADO POR TODOS LOS CARGOS'
+            else:
+                pass
+            '''
+            return HttpResponseRedirect('/votar/')
+
+    else:
+        form = login
+
+    c = {}
+    c.update(csrf(request))
+    c.update({'form':form,})
+    return render_to_response('login.html', c)
+
+
+@csrf_protect
+def RegistrarVoto(request):
     if request.method == 'POST':
         form = registro_usuario(request.POST)
         if form.is_valid():
@@ -47,7 +93,6 @@ def index(request):
         form = registro_usuario
 
     #import pdb;pdb.set_trace()
-    from django.db.models import Q
     cedula = '20363511'
     persona = Personas.objects.get(cedula=cedula)
     proceso_activo = Procesos.objects.get(estatus=1)

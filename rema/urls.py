@@ -19,5 +19,6 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^$','votacion.views.index'),#vista por defecto, debe ir de última
+    url(r'^votar/','votacion.views.RegistrarVoto'),
+    url(r'^$','votacion.views.index'),
 ]

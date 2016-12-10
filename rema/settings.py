@@ -26,7 +26,7 @@ SECRET_KEY = 'zxkh28uusgdky1dlon%&5jqx9dzw9y6kan!56%-t9ewjow!v@6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
+CSRF_COOKIE_DOMAIN = None
 ALLOWED_HOSTS = []
 
 LANGUAGE_CODE = 'es-ve'
@@ -131,6 +131,7 @@ TEMPLATE_CONTEXT_PROCESSORS=(
     "django.contrib.messages.context_processors.messages",
     'django.core.context_processors.media',
     'django.core.context_processors.request',
+    'django.core.context_processors.csrs',
 )
 
 TEMPLATE_LOADERS = (

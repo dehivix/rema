@@ -1,0 +1,12 @@
+*.sw*
+*.pyc
+*.sqlite
+*.save*
+docs/html/*
+settings/local.conf
+*.orig
+*.*~
+static/css/*
+static/js/*
+static/admin/*
+static/reportes/*

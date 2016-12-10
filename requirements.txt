@@ -1,0 +1,8 @@
+Django==1.8.5
+Pillow==3.0.0
+argparse==1.2.1
+django-materialize-css==0.0.1
+django-suit==0.2.15
+docutils==0.12
+suit==2.0.2
+wsgiref==0.1.2
